@@ -108,9 +108,15 @@ cd $XDG_CONFIG_HOME/quickshell
 git clone https://github.com/caelestia-dots/shell.git caelestia
 
 cd caelestia
+rm -rf build # ensure we rebuild from a clean tree
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/
 cmake --build build
 sudo cmake --install build
+
+> [!NOTE]
+> Keeping an existing `build/` directory around can leave behind stale QML artifacts when
+> switching commits. Remove it (or run `rebuild-shell.fish`, documented below) whenever a
+> build behaves strangely.
 ```
 
 > [!TIP]
@@ -128,6 +134,19 @@ sudo cmake --install build
 > sudo cmake --install build
 > sudo chown -R $USER ~/.config/quickshell/caelestia
 > ```
+
+#### Quick rebuild helper
+
+For day-to-day development there is a convenience script, `./rebuild-shell.fish`, that executes the
+same clean-build-install sequence shown above (including the `rm -rf build`). Run it from the repo root
+whenever you need to recompile everything after pulling new commits:
+
+```sh
+cd $XDG_CONFIG_HOME/quickshell/caelestia
+./rebuild-shell.fish
+```
+
+The script prints each step, stops on errors, and falls back with instructions if `sudo` is unavailable.
 
 ## Usage
 
