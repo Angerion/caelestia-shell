@@ -21,6 +21,9 @@ log "INSTALL_QSCONFDIR -> $install_qsconfdir"
 log "Cleaning existing build directory"
 rm -rf build
 
+log "Ensuring scripts are executable"
+chmod +x assets/wrap_term_launch.sh
+
 log "Ensuring Quickshell config directory exists"
 mkdir -p "$install_qsconfdir"
 

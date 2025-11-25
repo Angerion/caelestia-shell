@@ -60,8 +60,14 @@ if("plugin" IN_LIST ENABLE_MODULES)
 endif()
 
 if("shell" IN_LIST ENABLE_MODULES)
-    foreach(dir assets components config modules services utils)
+    foreach(dir components config modules services utils)
         install(DIRECTORY ${dir} DESTINATION "${INSTALL_QSCONFDIR}")
     endforeach()
+
+    install(DIRECTORY assets DESTINATION "${INSTALL_QSCONFDIR}"
+        PATTERN "wrap_term_launch.sh" EXCLUDE
+    )
+    install(PROGRAMS assets/wrap_term_launch.sh DESTINATION "${INSTALL_QSCONFDIR}/assets")
+
     install(FILES shell.qml LICENSE DESTINATION "${INSTALL_QSCONFDIR}")
 endif()
